@@ -1,0 +1,328 @@
+/* SF Pro system font — uses real SF Pro on Apple devices, Segoe UI on Windows */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/* ===== APPLE DESIGN TOKENS ===== */
+:root {
+  /* ── System Colors (iOS/macOS) ── */
+  --apple-blue:      #007AFF;
+  --apple-blue-dk:   #0062CC;
+  --apple-blue-lt:   #409CFF;
+  --apple-green:     #34C759;
+  --apple-red:       #FF3B30;
+  --apple-orange:    #FF9500;
+  --apple-purple:    #AF52DE;
+  --apple-teal:      #5AC8FA;
+
+  /* ── Background Layers (Grouped style) ── */
+  --bg-primary:      #F2F2F7;   /* iOS grouped table background */
+  --bg-secondary:    #FFFFFF;   /* Card / sheet surface        */
+  --bg-tertiary:     #F2F2F7;
+  --bg-elevated:     #FFFFFF;
+
+  /* ── Label Colors ── */
+  --label:           #000000;
+  --label-2:         #3C3C43;   /* secondary label */
+  --label-3:         #8E8E93;   /* tertiary label  */
+  --label-4:         #C7C7CC;   /* quaternary      */
+
+  /* ── Separator ── */
+  --separator:       rgba(60,60,67,0.13);
+  --separator-opaque:#D1D1D6;
+
+  /* ── Fill colors ── */
+  --fill-1:          rgba(120,120,128,0.20);
+  --fill-2:          rgba(120,120,128,0.16);
+  --fill-3:          rgba(120,120,128,0.12);
+
+  /* ── Tinted accent backgrounds ── */
+  --blue-fill:       rgba(0,122,255,0.10);
+  --blue-border:     rgba(0,122,255,0.22);
+  --green-fill:      rgba(52,199,89,0.12);
+  --green-border:    rgba(52,199,89,0.25);
+  --red-fill:        rgba(255,59,48,0.10);
+  --red-border:      rgba(255,59,48,0.22);
+
+  /* ── Shadows (Apple-subtle) ── */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.05);
+
+  /* ── Radius (iOS HIG) ── */
+  --r-sm:  10px;
+  --r-md:  14px;
+  --r-lg:  18px;
+  --r-xl:  22px;
+  --r-2xl: 28px;
+
+  /* ── Shorthand aliases (keep backward compat) ── */
+  --accent:        var(--apple-blue);
+  --accent-dk:     var(--apple-blue-dk);
+  --accent-lt:     var(--apple-blue-lt);
+  --accent-bg:     var(--blue-fill);
+  --accent-bdr:    var(--blue-border);
+  --surface:       var(--bg-secondary);
+  --bg:            var(--bg-primary);
+  --bg-alt:        var(--bg-tertiary);
+  --text-primary:  var(--label);
+  --text-secondary:var(--label-2);
+  --text-muted:    var(--label-3);
+  --text-disabled: var(--label-4);
+  --border:        var(--separator-opaque);
+  --border-lt:     var(--separator);
+  --success:       var(--apple-green);
+  --success-bg:    var(--green-fill);
+  --success-bd:    var(--green-border);
+  --error:         var(--apple-red);
+  --error-bg:      var(--red-fill);
+  --error-bd:      var(--red-border);
+  --radius-sm: var(--r-sm);
+  --radius-md: var(--r-md);
+  --radius-lg: var(--r-lg);
+  --radius-xl: var(--r-xl);
+}
+
+/* ===== BASE ===== */
+*, *::before, *::after {
+  box-sizing: border-box; margin: 0; padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+html { scroll-behavior: smooth; }
+body {
+  /* SF Pro on Apple, Segoe UI on Windows, Inter fallback */
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+               'Inter', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-primary);
+  color: var(--label);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  -webkit-overflow-scrolling: touch;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display headings — slightly heavier weight, tighter tracking */
+.font-display {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+               'Inter', 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: -0.025em;
+}
+
+/* ===== SKIP LINK ===== */
+.skip-link {
+  position: absolute; top: -60px; left: 12px;
+  background: var(--apple-blue); color: #fff;
+  padding: 8px 18px; border-radius: var(--r-sm);
+  font-weight: 600; font-size: 14px;
+  text-decoration: none; z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 12px; }
+
+/* ===== FOCUS ===== */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3.5px rgba(0,122,255,0.45);
+  border-radius: 4px;
+}
+button:focus:not(:focus-visible) { outline: none; }
+
+/* ===== PREVENT TAP DELAY ===== */
+button, a, [role='button'], [tabindex] {
+  touch-action: manipulation;
+}
+
+/* ===== SCROLLBAR (macOS style) ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+
+/* ===== APPLE SPRING PRESS ===== */
+/* All interactive elements get iOS spring physics */
+.pressable {
+  transition: transform 0.13s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+  cursor: pointer;
+}
+.pressable:active { transform: scale(0.95) !important; }
+.pressable-card:active { transform: scale(0.97) !important; }
+.pressable-sm:active { transform: scale(0.92) !important; }
+
+/* ===== CARD — iOS grouped list card ===== */
+.card {
+  background: var(--bg-secondary);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s cubic-bezier(0.25,0.46,0.45,0.94),
+              box-shadow 0.18s ease;
+  /* No border — Apple cards use shadow, not strokes */
+}
+.card:hover {
+  transform: translateY(-2px) scale(1.005);
+  box-shadow: var(--shadow-md);
+}
+.card-flat {
+  background: var(--bg-secondary);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-xs);
+}
+
+/* ===== APPLE BUTTONS ===== */
+/* Primary — iOS tinted filled pill */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  background: var(--apple-blue); color: #fff;
+  border: none; border-radius: 980px;       /* Apple pill shape */
+  padding: 13px 26px; font-size: 15px; font-weight: 590;
+  cursor: pointer; letter-spacing: -0.01em;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  transition: background 0.15s ease,
+              transform 0.12s cubic-bezier(0.25,0.46,0.45,0.94),
+              box-shadow 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0,122,255,0.30), 0 0 0 0 rgba(0,122,255,0);
+  position: relative; overflow: hidden;
+}
+.btn-primary:hover {
+  background: var(--apple-blue-dk);
+  box-shadow: 0 3px 12px rgba(0,122,255,0.38);
+}
+.btn-primary:active {
+  transform: scale(0.94) !important;
+  background: var(--apple-blue-dk);
+  box-shadow: 0 1px 4px rgba(0,122,255,0.2);
+}
+
+/* Secondary — iOS translucent filled (like "Cancel" button) */
+.btn-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  background: var(--blue-fill); color: var(--apple-blue);
+  border: none; border-radius: 980px;
+  padding: 12px 24px; font-size: 15px; font-weight: 590;
+  cursor: pointer; letter-spacing: -0.01em;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  transition: background 0.15s ease,
+              transform 0.12s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.btn-outline:hover { background: rgba(0,122,255,0.16); }
+.btn-outline:active { transform: scale(0.94) !important; }
+
+/* ===== BADGE — iOS pill label ===== */
+.badge-blue, .badge-accent {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--blue-fill); color: var(--apple-blue);
+  border: none;
+  padding: 5px 14px; border-radius: 980px;
+  font-size: 13px; font-weight: 590; letter-spacing: -0.01em;
+}
+.badge-green {
+  background: var(--green-fill); color: var(--apple-green);
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 980px; font-size: 12px; font-weight: 600;
+}
+.badge-gray {
+  background: var(--fill-2); color: var(--label-3);
+  display: inline-flex; align-items: center;
+  padding: 4px 12px; border-radius: 980px; font-size: 12px; font-weight: 500;
+}
+
+/* ===== PROGRESS BAR (iOS style) ===== */
+.progress-track {
+  height: 5px; background: var(--fill-2); border-radius: 100px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--apple-blue); border-radius: 100px;
+  transition: width 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+/* ===== QUIZ OPTION (iOS row style) ===== */
+.quiz-option {
+  width: 100%; text-align: left;
+  background: var(--bg-secondary); border: none;
+  border-radius: var(--r-md); padding: 14px 16px;
+  font-size: 15px; color: var(--label-2); cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  display: flex; align-items: center; gap: 12px;
+  letter-spacing: -0.01em;
+  transition: background 0.13s ease,
+              transform 0.12s cubic-bezier(0.25,0.46,0.45,0.94);
+  box-shadow: var(--shadow-xs);
+  position: relative;
+}
+.quiz-option:hover:not(:disabled) {
+  background: var(--blue-fill);
+  color: var(--apple-blue);
+}
+.quiz-option:active:not(:disabled) {
+  transform: scale(0.97) !important;
+  background: var(--blue-fill);
+}
+.quiz-option.correct {
+  background: var(--green-fill); color: var(--apple-green);
+}
+.quiz-option.wrong {
+  background: var(--red-fill); color: var(--apple-red);
+}
+.quiz-option:disabled { cursor: default; }
+
+/* ===== CHAT BUBBLES (iMessage style) ===== */
+.chat-bubble-user {
+  background: var(--apple-blue); color: #fff;
+  border-radius: 18px 18px 4px 18px;
+  padding: 10px 15px; font-size: 15px; line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+.chat-bubble-bot {
+  background: var(--fill-2);
+  color: var(--label);
+  border-radius: 18px 18px 18px 4px;
+  padding: 10px 15px; font-size: 15px; line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+/* ===== TYPING DOTS ===== */
+@keyframes typing {
+  0%,60%,100% { transform: translateY(0); opacity: 0.4; }
+  30%          { transform: translateY(-5px); opacity: 1; }
+}
+.dot-1 { animation: typing 1.3s ease-in-out infinite; }
+.dot-2 { animation: typing 1.3s ease-in-out 0.18s infinite; }
+.dot-3 { animation: typing 1.3s ease-in-out 0.36s infinite; }
+
+/* ===== SECTION WRAPPER ===== */
+.section-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 52px 20px 88px;
+}
+
+/* ===== FLOAT ANIM ===== */
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.float { animation: float 3.5s ease-in-out infinite; }
+
+/* ===== PULSE ===== */
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.88); }
+}
+
+/* ===== iOS CARD SEPARATOR ===== */
+.ios-row-separator {
+  height: 0.5px;
+  background: var(--separator);
+  margin-left: 16px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .show-mobile { display: flex !important; }
+  .section-wrap { padding: 28px 16px 72px; }
+}
+@media (min-width: 769px) {
+  .show-mobile { display: none !important; }
+}
