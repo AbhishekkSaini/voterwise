@@ -1,11 +1,12 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Transition } from 'framer-motion';
 import { QUIZ } from '../data';
 import { trackEvent } from '../lib/analytics';
 import { h } from '../lib/haptics';
 
 type State = 'start' | 'question' | 'result';
-const spring = { type: 'spring', stiffness: 320, damping: 28 };
+const spring: Transition = { type: 'spring', stiffness: 320, damping: 28 };
 
 export default function QuizSection() {
   const [state, setState] = useState<State>('start');

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
+import type { Transition } from 'framer-motion';
 import { TIMELINE } from '../data';
 
-const spring = { type: 'spring', stiffness: 320, damping: 28 };
+const spring: Transition = { type: 'spring', stiffness: 320, damping: 28 };
 
 const COLORS: Record<string, string> = {
   'Pre-Election': '#007AFF',

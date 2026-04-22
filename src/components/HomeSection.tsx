@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import type { Transition } from 'framer-motion';
 import type { SectionId } from '../types';
 import { h } from '../lib/haptics';
 
@@ -27,7 +28,7 @@ const GOOGLE = [
 ];
 
 // Apple spring transition
-const spring = { type: 'spring', stiffness: 320, damping: 28 };
+const spring: Transition = { type: 'spring', stiffness: 320, damping: 28 };
 
 export default function HomeSection({ onNavigate }: Props) {
   return (

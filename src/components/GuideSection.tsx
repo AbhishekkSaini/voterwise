@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Transition } from 'framer-motion';
 import { STEPS } from '../data';
 import type { ElectionStep } from '../types';
 import { trackEvent } from '../lib/analytics';
 import { h } from '../lib/haptics';
 
-const spring = { type: 'spring', stiffness: 320, damping: 28 };
+const spring: Transition = { type: 'spring', stiffness: 320, damping: 28 };
 
 function ProgressBar({ explored }: { explored: Set<number> }) {
   const pct = (explored.size / STEPS.length) * 100;
