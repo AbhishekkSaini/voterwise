@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare const google: any;
 import { useEffect, useRef, useState } from 'react';
 
 const MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
@@ -27,7 +29,7 @@ export default function MapSection() {
     script.defer = true;
     document.head.appendChild(script);
 
-    (window as Record<string, unknown>).initVoterWiseMap = () => {
+    (window as unknown as Record<string, unknown>).initVoterWiseMap = () => {
       if (!mapRef.current) return;
       const center = { lat: 28.6139, lng: 77.209 };
       const map = new google.maps.Map(mapRef.current, {
@@ -45,9 +47,9 @@ export default function MapSection() {
       const service = new google.maps.places.PlacesService(map);
       service.nearbySearch(
         { location: center, radius: 5000, keyword: 'polling booth election' },
-        (results, status) => {
+        (results: any, status: any) => {
           if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-            results.slice(0, 10).forEach(place => {
+            results.slice(0, 10).forEach((place: any) => {
               if (!place.geometry?.location) return;
               new google.maps.Marker({
                 position: place.geometry.location,

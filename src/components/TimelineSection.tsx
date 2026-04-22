@@ -99,7 +99,7 @@ export default function TimelineSection() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
                   <span style={{
                     fontSize: '11px', fontWeight: 700,
-                    letterSpacing: '0.01em', textTransform: 'uppercase',
+                    textTransform: 'uppercase',
                     color: col, background: `${col}12`,
                     padding: '2px 10px', borderRadius: '100px',
                     letterSpacing: '0.02em',
