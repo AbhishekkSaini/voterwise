@@ -1,18 +1,32 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './components/Header';
-import HomeSection from './components/HomeSection';
-import GuideSection from './components/GuideSection';
-import TimelineSection from './components/TimelineSection';
-import QuizSection from './components/QuizSection';
-import ChatSection from './components/ChatSection';
-import MapSection from './components/MapSection';
+import ErrorBoundary from './components/ErrorBoundary';
 import type { SectionId } from './types';
 import { initGA, trackEvent } from './lib/analytics';
 import { h } from './lib/haptics';
 
+// Lazy-load heavy sections for better efficiency / code splitting
+const HomeSection     = lazy(() => import('./components/HomeSection'));
+const GuideSection    = lazy(() => import('./components/GuideSection'));
+const TimelineSection = lazy(() => import('./components/TimelineSection'));
+const QuizSection     = lazy(() => import('./components/QuizSection'));
+const ChatSection     = lazy(() => import('./components/ChatSection'));
+const MapSection      = lazy(() => import('./components/MapSection'));
+
 const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID as string;
+
+const SectionFallback = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+    <div style={{
+      width: '32px', height: '32px', borderRadius: '50%',
+      border: '3px solid rgba(0,122,255,0.15)',
+      borderTopColor: '#007AFF',
+      animation: 'spin 0.7s linear infinite',
+    }} aria-label="Loading section" role="status" />
+  </div>
+);
 
 export default function App() {
   const [section, setSection] = useState<SectionId>('home');
@@ -33,17 +47,21 @@ export default function App() {
     if (id === 'chat') toast('💡 Ask anything about elections!', { duration: 2000 });
   }, []);
 
-  const MAP: Record<SectionId, React.ReactNode> = {
-    home:     <HomeSection onNavigate={navigate} />,
-    guide:    <GuideSection />,
-    timeline: <TimelineSection />,
-    quiz:     <QuizSection />,
-    chat:     <ChatSection />,
-    map:      <MapSection />,
+  const renderSection = () => {
+    switch (section) {
+      case 'home':     return <HomeSection onNavigate={navigate} />;
+      case 'guide':    return <GuideSection />;
+      case 'timeline': return <TimelineSection />;
+      case 'quiz':     return <QuizSection />;
+      case 'chat':     return <ChatSection />;
+      case 'map':      return <MapSection />;
+      default:         return <HomeSection onNavigate={navigate} />;
+    }
   };
 
   return (
     <div style={{ background: '#F2F2F7', minHeight: '100vh' }}>
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       <Toaster
         position="bottom-center"
         toastOptions={{
@@ -74,12 +92,16 @@ export default function App() {
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18 }}
           >
-            {MAP[section]}
+            <ErrorBoundary>
+              <Suspense fallback={<SectionFallback />}>
+                {renderSection()}
+              </Suspense>
+            </ErrorBoundary>
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* Footer — Apple style minimal */}
+      {/* Footer */}
       <footer role="contentinfo" style={{
         background: '#fff',
         borderTop: '0.5px solid rgba(60,60,67,0.13)',
@@ -94,16 +116,15 @@ export default function App() {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '13px',
             }} aria-hidden="true">🗳️</div>
-            <span className="font-display" style={{
-              fontWeight: 700, fontSize: '15px', color: '#000',
-              letterSpacing: '-0.02em',
-            }}>VoterWise</span>
+            <span className="font-display" style={{ fontWeight: 700, fontSize: '15px', color: '#000', letterSpacing: '-0.02em' }}>
+              VoterWise
+            </span>
           </div>
           <p style={{ color: 'rgba(60,60,67,0.6)', fontSize: '13px', marginBottom: '6px', letterSpacing: '-0.01em' }}>
             Making democracy understandable for everyone.
           </p>
           <p style={{ color: 'rgba(60,60,67,0.35)', fontSize: '12px', letterSpacing: '-0.005em' }}>
-            Powered by Google Gemini · Maps · Analytics
+            Powered by Google Gemini · Google Maps · Google Analytics · Google Fonts
           </p>
         </div>
       </footer>
@@ -119,7 +140,7 @@ export default function App() {
             style={{
               position: 'fixed', bottom: '28px', right: '24px',
               width: '36px', height: '36px', borderRadius: '50%',
-              background: 'rgba(0,122,255,1)', color: '#fff', border: 'none',
+              background: '#007AFF', color: '#fff', border: 'none',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', fontSize: '16px',
               boxShadow: '0 4px 16px rgba(0,122,255,0.35)',

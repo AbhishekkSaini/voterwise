@@ -15,17 +15,33 @@
     <meta property="og:description" content="An interactive, beginner-friendly guide to the election process, powered by Google Gemini AI." />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗳️</text></svg>" />
+
+    <!-- Google Fonts (Inter + DM Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLACEHOLDER"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PLACEHOLDER', { anonymize_ip: true, send_page_view: true });
+    </script>
+
     <title>VoterWise — Learn How Elections Work</title>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "EducationalApplication",
       "name": "VoterWise",
-      "description": "Interactive assistant explaining the election process step-by-step.",
+      "description": "Interactive election education assistant powered by Google Gemini AI with Google Maps integration.",
       "applicationCategory": "EducationApplication",
-      "educationalLevel": "Beginner"
+      "educationalLevel": "Beginner",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": ["Google Gemini AI Chat", "Google Maps Polling Booth Finder", "Google Analytics 4", "Google Fonts"],
+      "url": "https://voterwise.vercel.app"
     }
     </script>
   </head>
