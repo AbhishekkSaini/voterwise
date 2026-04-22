@@ -1,4 +1,5 @@
-import { defineConfig } from 'vitest/config'
+/// <reference types="vitest" />
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -10,4 +11,3 @@ export default defineConfig({
     include: ['src/tests/**/*.test.ts', 'src/tests/**/*.test.tsx'],
   },
 })
-
