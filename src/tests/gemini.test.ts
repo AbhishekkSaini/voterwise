@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 // Mock the env variable before importing
 vi.stubEnv('VITE_GEMINI_API_KEY', '');
